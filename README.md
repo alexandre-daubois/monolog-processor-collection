@@ -5,7 +5,7 @@
 [![Latest Stable Version](http://poser.pugx.org/alexandre-daubois/monolog-processor-collection/v/stable)](https://packagist.org/packages/alexandre-daubois/monolog-processor-collection)
 [![License](http://poser.pugx.org/alexandre-daubois/monolog-processor-collection/license)](https://packagist.org/packages/alexandre-daubois/monolog-processor-collection)
 
-Monolog Processor Collectior, or MPC for short, is a collection of useful processors for the
+Monolog Processor Collectior, or **MPC** for short, is a collection of useful processors for the
 [Monolog](https://github.com/Seldaek/monolog) logging library. The processors
 add useful information to the log records. The package is compatible with PHP 8.1+.
 
@@ -40,6 +40,16 @@ $logger = new Logger('name');
 $logger->pushProcessor(new BacktraceProcessor(Level::Notice));
 ```
 
+Some processors, like `EnvVarProcessor` and `PhpIniValueProcessor`, require you to specify more
+arguments. For example:
+
+```php
+use Monolog\Logger;
+
+$logger = new Logger('name');
+$logger->pushProcessor(new EnvVarProcessor(['APP_ENV', 'APP_DEBUG']));
+```
+
 The package provides the following processors:
 
 - `BacktraceProcessor` adds the backtrace to the log record
@@ -47,3 +57,5 @@ The package provides the following processors:
 - `IsHttpsProcessor` adds a boolean value indicating whether the request is a secured HTTP request to the log record
 - `PhpIniValueProcessor` adds the value of one or more PHP ini settings to the log record
 - `ProtocolVersionProcessor` adds the HTTP protocol version to the log record
+- `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
+- `SapiNameProcessor` adds the name of the SAPI to the log record
