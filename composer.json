@@ -1,0 +1,44 @@
+{
+    "name": "alexandre-daubois/monolog-processor-collection",
+    "type": "library",
+    "description": "A collection of Monolog processors",
+    "keywords": [
+        "monolog",
+        "processor",
+        "collection",
+        "log",
+        "logging",
+        "psr-3",
+        "psr3",
+        "psr-3-logger",
+        "psr3-logger",
+        "psr-3-logging",
+        "psr3-logging"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandre Daubois",
+            "email": "alex.daubois@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.1",
+        "monolog/monolog": "^3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10",
+        "friendsofphp/php-cs-fixer": "^3.37"
+    },
+    "autoload": {
+        "psr-4": {
+            "MonologProcessorCollection\\": "src/",
+            "MonologProcessorCollection\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
+    }
+}
