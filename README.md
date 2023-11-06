@@ -5,7 +5,7 @@
 [![Latest Stable Version](http://poser.pugx.org/alexandre-daubois/monolog-processor-collection/v/stable)](https://packagist.org/packages/alexandre-daubois/monolog-processor-collection)
 [![License](http://poser.pugx.org/alexandre-daubois/monolog-processor-collection/license)](https://packagist.org/packages/alexandre-daubois/monolog-processor-collection)
 
-Monolog Processor Collectior, or **MPC** for short, is a collection of useful processors for the
+Monolog Processor Collection, or **MPC** for short, is a collection of useful processors for the
 [Monolog](https://github.com/Seldaek/monolog) logging library. The processors
 add useful information to the log records. The package is compatible with PHP 8.1+.
 
@@ -54,6 +54,7 @@ The package provides the following processors:
 
 - `BacktraceProcessor` adds the backtrace to the log record
 - `EnvVarProcessor` adds the value of one or more environment variables to the log record
+- `HighResolutionTimestampProcessor` adds the high resolution time to the log record
 - `IsHttpsProcessor` adds a boolean value indicating whether the request is a secured HTTP request to the log record
 - `PhpIniValueProcessor` adds the value of one or more PHP ini settings to the log record
 - `ProtocolVersionProcessor` adds the HTTP protocol version to the log record

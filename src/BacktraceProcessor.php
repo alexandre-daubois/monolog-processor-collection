@@ -11,6 +11,9 @@ namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
 
+/**
+ * Add the backtrace to the log record.
+ */
 final class BacktraceProcessor extends AbstractThresholdProcessor
 {
     protected function process(LogRecord $record): LogRecord

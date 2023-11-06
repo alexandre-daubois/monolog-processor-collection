@@ -11,6 +11,9 @@ namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
 
+/**
+ * Add the protocol version to the log record.
+ */
 final class ProtocolVersionProcessor extends AbstractThresholdProcessor
 {
     protected function process(LogRecord $record): LogRecord

@@ -12,6 +12,9 @@ namespace MonologProcessorCollection;
 use Monolog\Level;
 use Monolog\LogRecord;
 
+/**
+ * Add the value of some php.ini settings to the log record.
+ */
 final class PhpIniValueProcessor extends AbstractThresholdProcessor
 {
     /**

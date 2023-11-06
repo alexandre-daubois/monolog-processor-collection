@@ -14,17 +14,12 @@ use Monolog\LogRecord;
 /**
  * Add the high resolution timestamp to the log record.
  */
-final class IsHttpsProcessor extends AbstractThresholdProcessor
+final class HighResolutionTimestampProcessor extends AbstractThresholdProcessor
 {
     protected function process(LogRecord $record): LogRecord
     {
-        $record['extra']['is_https'] = $this->isHttps();
+        $record['extra']['hrtime'] = \hrtime(true);
 
         return $record;
-    }
-
-    private function isHttps(): bool
-    {
-        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['SERVER_PORT'] ?? null) === 443;
     }
 }

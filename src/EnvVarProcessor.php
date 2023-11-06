@@ -12,6 +12,9 @@ namespace MonologProcessorCollection;
 use Monolog\Level;
 use Monolog\LogRecord;
 
+/**
+ * Add the value of the environment variables to the log record.
+ */
 final class EnvVarProcessor extends AbstractThresholdProcessor
 {
     /**

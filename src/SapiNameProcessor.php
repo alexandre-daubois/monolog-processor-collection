@@ -11,6 +11,9 @@ namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
 
+/**
+ * Add the SAPI name to the log record.
+ */
 final class SapiNameProcessor extends AbstractThresholdProcessor
 {
     protected function process(LogRecord $record): LogRecord

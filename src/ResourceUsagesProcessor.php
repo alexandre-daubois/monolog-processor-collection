@@ -11,6 +11,9 @@ namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
 
+/**
+ * Add the resource usages to the log record.
+ */
 final class ResourceUsagesProcessor extends AbstractThresholdProcessor
 {
     protected function process(LogRecord $record): LogRecord
