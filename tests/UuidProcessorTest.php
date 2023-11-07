@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-
 use Monolog\Handler\TestHandler;
 use Monolog\Level;
 use MonologProcessorCollection\Tests\AbstractProcessorTestCase;
@@ -25,11 +24,43 @@ class UuidProcessorTest extends AbstractProcessorTestCase
         $handler = new TestHandler();
         $handler->pushProcessor($processor);
         $handler->handle($this->createRecord(Level::Notice));
+        $handler->handle($this->createRecord(Level::Notice));
 
         $this->assertTrue($handler->hasNoticeRecords());
-        $record = $handler->getRecords()[0];
+        $firstRecord = $handler->getRecords()[0];
+        $secondRecord = $handler->getRecords()[1];
 
-        $this->assertArrayHasKey('uuid', $record->extra);
-        $this->assertTrue(Uuid::isValid($record->extra['uuid']));
+        $this->assertArrayHasKey('uuid', $firstRecord->extra);
+        $this->assertTrue(Uuid::isValid($firstRecord->extra['uuid']));
+
+        $this->assertArrayHasKey('uuid', $secondRecord->extra);
+        $this->assertTrue(Uuid::isValid($secondRecord->extra['uuid']));
+
+        $this->assertSame($firstRecord->extra['uuid'], $secondRecord->extra['uuid']);
+    }
+
+    public function testResettable(): void
+    {
+        $processor = new UuidProcessor();
+
+        $handler = new TestHandler();
+        $handler->pushProcessor($processor);
+        $handler->handle($this->createRecord(Level::Notice));
+
+        $processor->reset();
+
+        $handler->handle($this->createRecord(Level::Notice));
+
+        $this->assertTrue($handler->hasNoticeRecords());
+        $firstRecord = $handler->getRecords()[0];
+        $secondRecord = $handler->getRecords()[1];
+
+        $this->assertArrayHasKey('uuid', $firstRecord->extra);
+        $this->assertTrue(Uuid::isValid($firstRecord->extra['uuid']));
+
+        $this->assertArrayHasKey('uuid', $secondRecord->extra);
+        $this->assertTrue(Uuid::isValid($secondRecord->extra['uuid']));
+
+        $this->assertNotSame($firstRecord->extra['uuid'], $secondRecord->extra['uuid']);
     }
 }
