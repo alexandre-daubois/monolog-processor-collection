@@ -19,7 +19,6 @@ final class BacktraceProcessor extends AbstractThresholdProcessor
     protected function process(LogRecord $record): LogRecord
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
-        \array_shift($trace);
         $stack = [];
 
         foreach ($trace as $call) {
