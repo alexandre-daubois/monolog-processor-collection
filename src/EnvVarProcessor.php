@@ -34,7 +34,7 @@ final class EnvVarProcessor extends AbstractThresholdProcessor
         $record['extra']['env'] = [];
 
         foreach ($this->vars as $var) {
-            $record['extra']['env'][$var] = \getenv($var) ?? $_ENV[$var] ?? $_SERVER[$var] ?? null;
+            $record['extra']['env'][$var] = $_ENV[$var] ?? $_SERVER[$var] ?? null;
         }
 
         return $record;
