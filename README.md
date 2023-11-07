@@ -5,9 +5,14 @@
 [![Latest Stable Version](http://poser.pugx.org/alexandre-daubois/monolog-processor-collection/v/stable)](https://packagist.org/packages/alexandre-daubois/monolog-processor-collection)
 [![License](http://poser.pugx.org/alexandre-daubois/monolog-processor-collection/license)](https://packagist.org/packages/alexandre-daubois/monolog-processor-collection)
 
-Monolog Processor Collection, or **MPC** for short, is a collection of useful processors for the
-[Monolog](https://github.com/Seldaek/monolog) logging library. The processors
-add useful information to the log records. The package is compatible with PHP 8.1+.
+Welcome to the Monolog Processor Collection (MPC) - the ultimate suite of processors designed to enhance your logging
+with the renowned [Monolog](https://github.com/Seldaek/monolog) library. This toolkit is meticulously crafted to
+integrate seamlessly with PHP 8.1+, ensuring your logging captures the comprehensive details you need with minimal
+overhead.
+
+MPC is engineered for developers who demand more from their logs. Whether you're tracking down elusive bugs or
+monitoring live production environments, processors enrich your log entries with invaluable context, turning
+ordinary logs into a rich, actionable dataset.
 
 ## Installation
 
@@ -60,6 +65,7 @@ The package provides the following processors:
 - `ProtocolVersionProcessor` adds the HTTP protocol version to the log record
 - `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
 - `SapiNameProcessor` adds the name of the SAPI to the log record
+- `UuidProcessor` adds a UUID v7 to the log record to track records triggered during the same request
 
 ## Integration with Symfony and MonologBundle
 
