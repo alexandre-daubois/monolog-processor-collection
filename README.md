@@ -74,6 +74,11 @@ your `config/packages/monolog.php` file:
 
 ```php
 use Monolog\Processor\ProcessorInterface;
+use MonologProcessorCollection\BacktraceProcessor;
+use MonologProcessorCollection\EnvVarProcessor;
+use MonologProcessorCollection\ProtocolVersionProcessor;
+use MonologProcessorCollection\EnvVarProcessor;
+use MonologProcessorCollection\SapiNameProcessor;
 
 return static function (ContainerConfigurator $configurator): void {
     // ...
@@ -94,10 +99,6 @@ return static function (ContainerConfigurator $configurator): void {
 If you don't use autoconfigure, you need to tag the processors with `monolog.processor`:
 
 ```php
-use Monolog\Processor\ProcessorInterface;
-use MonologProcessorCollection\BacktraceProcessor;
-use MonologProcessorCollection\EnvVarProcessor;
-
 return static function (ContainerConfigurator $configurator): void {
     // ...
 
@@ -117,10 +118,10 @@ You can achieve the same configuration with YAML:
 ```yaml
 # config/packages/monolog.yaml
 services:
-    Monolog\Processor\BacktraceProcessor:
+    MonologProcessorCollection\BacktraceProcessor:
         tags:
             - { name: monolog.processor, handler: main }
-    Monolog\Processor\EnvVarProcessor:
+    MonologProcessorCollection\EnvVarProcessor:
         arguments:
             - APP_ENV
         tags:
@@ -134,10 +135,10 @@ Or XML:
 
 <!-- ... -->
 
-<service id="Monolog\Processor\BacktraceProcessor" public="false">
+<service id="MonologProcessorCollection\BacktraceProcessor" public="false">
     <tag name="monolog.processor" handler="main" />
 </service>
-<service id="Monolog\Processor\EnvVarProcessor" public="false">
+<service id="MonologProcessorCollection\EnvVarProcessor" public="false">
     <argument>APP_ENV</argument>
     <tag name="monolog.processor" handler="main" />
 </service>
