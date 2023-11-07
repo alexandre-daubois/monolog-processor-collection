@@ -19,6 +19,7 @@ final class BacktraceProcessor extends AbstractThresholdProcessor
     protected function process(LogRecord $record): LogRecord
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+        \array_shift($trace);
         $stack = [];
 
         foreach ($trace as $call) {
@@ -26,11 +27,12 @@ final class BacktraceProcessor extends AbstractThresholdProcessor
                 continue;
             }
 
-            if (\str_contains($file, \DIRECTORY_SEPARATOR.'vendor'.\DIRECTORY_SEPARATOR)) {
+            $class = $call['class'] ?? null;
+            if ( \str_starts_with($class, 'Monolog\\') || \str_starts_with($class, 'MonologProcessorCollection\\')) {
                 continue;
             }
 
-            \array_unshift($stack, \sprintf('%s(%d)', $file, $call['line']));
+            $stack[] = \sprintf('%s(%d)', $file, $call['line']);
         }
 
         $record['extra']['backtrace'] = $stack;

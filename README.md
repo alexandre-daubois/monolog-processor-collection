@@ -60,3 +60,79 @@ The package provides the following processors:
 - `ProtocolVersionProcessor` adds the HTTP protocol version to the log record
 - `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
 - `SapiNameProcessor` adds the name of the SAPI to the log record
+
+## Integration with Symfony and MonologBundle
+
+You can register those processors to be used with Symfony and MonologBundle by adding the following configuration to
+your `config/packages/monolog.php` file:
+
+```php
+use Monolog\Processor\ProcessorInterface;
+
+return static function (ContainerConfigurator $configurator): void {
+    // ...
+
+    // register as many processors as you like, but keep in mind that
+    // each processor is called for each log record
+    $services = $configurator->services();
+    $services
+        ->set(BacktraceProcessor::class)
+        ->set(EnvVarProcessor::class)->args(['APP_ENV'])
+        ->set(ProtocolVersionProcessor::class)
+        ->set(SapiNameProcessor::class);
+
+    // ...
+};
+```
+
+If you don't use autoconfigure, you need to tag the processors with `monolog.processor`:
+
+```php
+use Monolog\Processor\ProcessorInterface;
+use MonologProcessorCollection\BacktraceProcessor;
+use MonologProcessorCollection\EnvVarProcessor;
+
+return static function (ContainerConfigurator $configurator): void {
+    // ...
+
+    $services = $configurator->services();
+    $services
+        ->set(BacktraceProcessorAlias::class)
+            ->tag('monolog.processor', ['handler' => 'main'])
+        ->set(EnvVarProcessor::class)->args(['APP_ENV'])
+            ->tag('monolog.processor', ['handler' => 'main']);
+
+    // ...
+};
+```
+
+You can achieve the same configuration with YAML:
+
+```yaml
+# config/packages/monolog.yaml
+services:
+    Monolog\Processor\BacktraceProcessor:
+        tags:
+            - { name: monolog.processor, handler: main }
+    Monolog\Processor\EnvVarProcessor:
+        arguments:
+            - APP_ENV
+        tags:
+            - { name: monolog.processor, handler: main }
+```
+
+Or XML:
+
+```xml
+<!-- config/packages/monolog.xml -->
+
+<!-- ... -->
+
+<service id="Monolog\Processor\BacktraceProcessor" public="false">
+    <tag name="monolog.processor" handler="main" />
+</service>
+<service id="Monolog\Processor\EnvVarProcessor" public="false">
+    <argument>APP_ENV</argument>
+    <tag name="monolog.processor" handler="main" />
+</service>
+```

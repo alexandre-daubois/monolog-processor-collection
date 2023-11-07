@@ -29,7 +29,7 @@ class BacktraceProcessorTest extends AbstractProcessorTestCase
         $record = $handler->getRecords()[0];
 
         $this->assertArrayHasKey('backtrace', $record->extra);
-        $this->assertStringMatchesFormat(__FILE__.'(%d)', $record->extra['backtrace'][0]);
-        $this->assertStringMatchesFormat('%s.php(%d)', $record->extra['backtrace'][1]);
+        $this->assertStringNotContainsString(__FILE__, $record->extra['backtrace'][0]);
+        $this->assertStringMatchesFormat('%s/vendor/bin/phpunit(%d)', $record->extra['backtrace'][\count($record->extra['backtrace']) - 1]);
     }
 }
