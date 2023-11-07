@@ -16,6 +16,8 @@ use Monolog\LogRecord;
  */
 final class BacktraceProcessor extends AbstractThresholdProcessor
 {
+    private const MONOLOG_VENDOR_DIRNAME = 'vendor/monolog/monolog';
+
     protected function process(LogRecord $record): LogRecord
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
@@ -27,7 +29,7 @@ final class BacktraceProcessor extends AbstractThresholdProcessor
             }
 
             $class = $call['class'] ?? null;
-            if ( \str_starts_with($class, 'Monolog\\') || \str_starts_with($class, 'MonologProcessorCollection\\')) {
+            if (\str_contains($file, self::MONOLOG_VENDOR_DIRNAME) || \str_starts_with($class, 'MonologProcessorCollection\\')) {
                 continue;
             }
 
