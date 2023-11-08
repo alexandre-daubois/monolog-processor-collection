@@ -19,6 +19,10 @@ final class BacktraceProcessor implements ProcessorInterface
 {
     private const MONOLOG_VENDOR_DIRNAME = 'vendor/monolog/monolog';
 
+    public function __construct(private readonly int|false $limit = false)
+    {
+    }
+
     public function __invoke(LogRecord $record): LogRecord
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
@@ -35,6 +39,10 @@ final class BacktraceProcessor implements ProcessorInterface
             }
 
             $stack[] = \sprintf('%s(%d)', $file, $call['line']);
+
+            if ($this->limit && \count($stack) >= $this->limit) {
+                break;
+            }
         }
 
         $record['extra']['backtrace'] = $stack;
