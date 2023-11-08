@@ -10,13 +10,14 @@
 namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the SAPI name to the log record.
  */
-final class SapiNameProcessor extends AbstractThresholdProcessor
+final class SapiNameProcessor implements ProcessorInterface
 {
-    protected function process(LogRecord $record): LogRecord
+    public function __invoke(LogRecord $record): LogRecord
     {
         $record['extra']['sapi'] = \PHP_SAPI;
 

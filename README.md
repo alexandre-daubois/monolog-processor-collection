@@ -33,18 +33,6 @@ $logger = new Logger('name');
 $logger->pushProcessor(new BacktraceProcessor());
 ```
 
-For performance reasons, processors use a threshold level to determine whether to add the information to the log record.
-The default threshold level is `Level::Notice`. You can change the threshold level by passing it as the first
-argument to the processor constructor. For example:
-
-```php
-use Monolog\Logger;
-use Monolog\Level;
-
-$logger = new Logger('name');
-$logger->pushProcessor(new BacktraceProcessor(Level::Notice));
-```
-
 Some processors, like `EnvVarProcessor` and `PhpIniValueProcessor`, require you to specify more
 arguments. For example:
 

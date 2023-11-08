@@ -10,15 +10,18 @@
 namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the protocol version to the log record.
  */
-final class ProtocolVersionProcessor extends AbstractThresholdProcessor
+final class ProtocolVersionProcessor implements ProcessorInterface
 {
-    protected function process(LogRecord $record): LogRecord
+    private static ?string $protocol = null;
+
+    public function __invoke(LogRecord $record): LogRecord
     {
-        $record['extra']['protocol'] = $_SERVER['SERVER_PROTOCOL'] ?? 'Unknown';
+        $record['extra']['protocol'] = (self::$protocol ??= ($_SERVER['SERVER_PROTOCOL'] ?? 'Unknown'));
 
         return $record;
     }

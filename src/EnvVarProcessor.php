@@ -11,25 +11,24 @@ namespace MonologProcessorCollection;
 
 use Monolog\Level;
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the value of the environment variables to the log record.
  */
-final class EnvVarProcessor extends AbstractThresholdProcessor
+final class EnvVarProcessor implements ProcessorInterface
 {
     /**
      * @var array<string>
      */
     private array $vars;
 
-    public function __construct(array|string $vars, Level $threshold = Level::Notice)
+    public function __construct(array|string $vars)
     {
-        parent::__construct($threshold);
-
         $this->vars = (array) $vars;
     }
 
-    protected function process(LogRecord $record): LogRecord
+    public function __invoke(LogRecord $record): LogRecord
     {
         $record['extra']['env'] = [];
 

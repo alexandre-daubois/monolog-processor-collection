@@ -10,13 +10,14 @@
 namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the resource usages to the log record.
  */
-final class ResourceUsagesProcessor extends AbstractThresholdProcessor
+final class ResourceUsagesProcessor implements ProcessorInterface
 {
-    protected function process(LogRecord $record): LogRecord
+    public function __invoke(LogRecord $record): LogRecord
     {
         $record['extra']['resource_usages'] = \getrusage();
 

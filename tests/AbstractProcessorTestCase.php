@@ -16,14 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractProcessorTestCase extends TestCase
 {
-    public function testLogUnderNoticeLevelsSkips(): void
-    {
-        $processor = new BacktraceProcessor();
-
-        $record = $processor($this->createRecord(Level::Debug));
-        $this->assertArrayNotHasKey('backtrace', $record->extra);
-    }
-
     protected function createRecord(Level $level): LogRecord
     {
         return new LogRecord(new \DateTimeImmutable(), 'main', $level, 'notice');

@@ -10,15 +10,18 @@
 namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the high resolution timestamp to the log record.
  */
-final class IsHttpsProcessor extends AbstractThresholdProcessor
+final class IsHttpsProcessor implements ProcessorInterface
 {
-    protected function process(LogRecord $record): LogRecord
+    private static ?bool $isHttps = null;
+
+    public function __invoke(LogRecord $record): LogRecord
     {
-        $record['extra']['is_https'] = $this->isHttps();
+        $record['extra']['is_https'] = (self::$isHttps ??= $this->isHttps());
 
         return $record;
     }
