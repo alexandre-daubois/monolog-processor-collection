@@ -56,6 +56,7 @@ The package provides the following processors:
 - `RequestSizeProcessor` adds the size of the request to the log record, headers included, in bytes
 - `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
 - `SapiNameProcessor` adds the name of the SAPI to the log record
+- `SessionIdProcessor` adds the session ID to the log record, or null if no session is active
 - `UuidProcessor` adds a UUID v7 to the log record to track records triggered during the same request
 
 ## Integration with Symfony and MonologBundle
