@@ -34,7 +34,7 @@ final class BacktraceProcessor implements ProcessorInterface
             }
 
             $class = $call['class'] ?? null;
-            if (\str_contains($file, self::MONOLOG_VENDOR_DIRNAME) || \str_starts_with($class, 'MonologProcessorCollection\\')) {
+            if (\str_contains($file, self::MONOLOG_VENDOR_DIRNAME) || null !== $class && \str_starts_with($class, 'MonologProcessorCollection\\')) {
                 continue;
             }
 
