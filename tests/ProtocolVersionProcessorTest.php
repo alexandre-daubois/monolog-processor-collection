@@ -17,6 +17,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ProtocolVersionProcessor::class)]
 class ProtocolVersionProcessorTest extends AbstractProcessorTestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testItWorks(): void
     {
         $processor = new ProtocolVersionProcessor();

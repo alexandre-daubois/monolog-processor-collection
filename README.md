@@ -16,6 +16,23 @@ ordinary logs into a rich, actionable dataset.
 
 MPC is compatible with worker mode of web servers, as relevant processors implement the `ResettableInterface`.
 
+## Available Processors
+
+The package provides the following processors:
+
+- `BacktraceProcessor` adds the backtrace to the log record
+- `ClientIpProcessor` adds the client IP address to the log record
+- `EnvVarProcessor` adds the value of one or more environment variables to the log record
+- `HighResolutionTimestampProcessor` adds the high resolution time to the log record
+- `IsHttpsProcessor` adds a boolean value indicating whether the request is a secured HTTP request to the log record
+- `PhpIniValueProcessor` adds the value of one or more PHP ini settings to the log record
+- `ProtocolVersionProcessor` adds the HTTP protocol version to the log record
+- `RequestSizeProcessor` adds the size of the request to the log record, headers included, in bytes
+- `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
+- `SapiNameProcessor` adds the name of the SAPI to the log record
+- `SessionIdProcessor` adds the session ID to the log record, or null if no session is active
+- `UuidProcessor` adds a UUID v7 to the log record to track records triggered during the same request
+
 ## Installation
 
 The recommended way to install MPC is through [Composer](https://getcomposer.org/):
@@ -44,20 +61,6 @@ use Monolog\Logger;
 $logger = new Logger('name');
 $logger->pushProcessor(new EnvVarProcessor(['APP_ENV', 'APP_DEBUG']));
 ```
-
-The package provides the following processors:
-
-- `BacktraceProcessor` adds the backtrace to the log record
-- `EnvVarProcessor` adds the value of one or more environment variables to the log record
-- `HighResolutionTimestampProcessor` adds the high resolution time to the log record
-- `IsHttpsProcessor` adds a boolean value indicating whether the request is a secured HTTP request to the log record
-- `PhpIniValueProcessor` adds the value of one or more PHP ini settings to the log record
-- `ProtocolVersionProcessor` adds the HTTP protocol version to the log record
-- `RequestSizeProcessor` adds the size of the request to the log record, headers included, in bytes
-- `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
-- `SapiNameProcessor` adds the name of the SAPI to the log record
-- `SessionIdProcessor` adds the session ID to the log record, or null if no session is active
-- `UuidProcessor` adds a UUID v7 to the log record to track records triggered during the same request
 
 ## Integration with Symfony and MonologBundle
 
