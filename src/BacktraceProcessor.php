@@ -10,15 +10,16 @@
 namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the backtrace to the log record.
  */
-final class BacktraceProcessor extends AbstractThresholdProcessor
+final class BacktraceProcessor implements ProcessorInterface
 {
     private const MONOLOG_VENDOR_DIRNAME = 'vendor/monolog/monolog';
 
-    protected function process(LogRecord $record): LogRecord
+    public function __invoke(LogRecord $record): LogRecord
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
         $stack = [];

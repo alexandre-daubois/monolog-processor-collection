@@ -10,13 +10,14 @@
 namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the high resolution timestamp to the log record.
  */
-final class HighResolutionTimestampProcessor extends AbstractThresholdProcessor
+final class HighResolutionTimestampProcessor implements ProcessorInterface
 {
-    protected function process(LogRecord $record): LogRecord
+    public function __invoke(LogRecord $record): LogRecord
     {
         $record['extra']['hrtime'] = \hrtime(true);
 

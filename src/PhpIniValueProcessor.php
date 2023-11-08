@@ -11,25 +11,24 @@ namespace MonologProcessorCollection;
 
 use Monolog\Level;
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
 
 /**
  * Add the value of some php.ini settings to the log record.
  */
-final class PhpIniValueProcessor extends AbstractThresholdProcessor
+final class PhpIniValueProcessor implements ProcessorInterface
 {
     /**
      * @var array<string>
      */
     private array $settings;
 
-    public function __construct(array|string $settings, Level $threshold = Level::Notice)
+    public function __construct(array|string $settings)
     {
-        parent::__construct($threshold);
-
         $this->settings = (array) $settings;
     }
 
-    protected function process(LogRecord $record): LogRecord
+    public function __invoke(LogRecord $record): LogRecord
     {
         $record['extra']['php_ini'] = [];
 
