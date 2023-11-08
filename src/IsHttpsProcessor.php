@@ -11,11 +11,12 @@ namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
+use Monolog\ResettableInterface;
 
 /**
  * Add the high resolution timestamp to the log record.
  */
-final class IsHttpsProcessor implements ProcessorInterface
+final class IsHttpsProcessor implements ProcessorInterface, ResettableInterface
 {
     private static ?bool $isHttps = null;
 
@@ -28,6 +29,11 @@ final class IsHttpsProcessor implements ProcessorInterface
 
     private function isHttps(): bool
     {
-        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['SERVER_PORT'] ?? null) === 443;
+        return (!empty($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS']) || ($_SERVER['SERVER_PORT'] ?? null) === 443;
+    }
+
+    public function reset(): void
+    {
+        self::$isHttps = null;
     }
 }

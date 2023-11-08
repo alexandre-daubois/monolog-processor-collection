@@ -11,11 +11,12 @@ namespace MonologProcessorCollection;
 
 use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
+use Monolog\ResettableInterface;
 
 /**
  * Add the protocol version to the log record.
  */
-final class ProtocolVersionProcessor implements ProcessorInterface
+final class ProtocolVersionProcessor implements ProcessorInterface, ResettableInterface
 {
     private static ?string $protocol = null;
 
@@ -24,5 +25,10 @@ final class ProtocolVersionProcessor implements ProcessorInterface
         $record['extra']['protocol'] = (self::$protocol ??= ($_SERVER['SERVER_PROTOCOL'] ?? 'Unknown'));
 
         return $record;
+    }
+
+    public function reset(): void
+    {
+        self::$protocol = null;
     }
 }
