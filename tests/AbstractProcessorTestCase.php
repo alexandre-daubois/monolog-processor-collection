@@ -11,7 +11,6 @@ namespace MonologProcessorCollection\Tests;
 
 use Monolog\Level;
 use Monolog\LogRecord;
-use MonologProcessorCollection\BacktraceProcessor;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractProcessorTestCase extends TestCase

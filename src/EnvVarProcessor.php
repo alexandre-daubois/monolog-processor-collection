@@ -9,7 +9,6 @@
 
 namespace MonologProcessorCollection;
 
-use Monolog\Level;
 use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
 

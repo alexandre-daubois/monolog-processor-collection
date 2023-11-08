@@ -14,6 +14,8 @@ MPC is engineered for developers who demand more from their logs. Whether you're
 monitoring live production environments, processors enrich your log entries with invaluable context, turning
 ordinary logs into a rich, actionable dataset.
 
+MPC is compatible with worker mode of web servers, as relevant processors implement the `ResettableInterface`.
+
 ## Installation
 
 The recommended way to install MPC is through [Composer](https://getcomposer.org/):
@@ -51,6 +53,7 @@ The package provides the following processors:
 - `IsHttpsProcessor` adds a boolean value indicating whether the request is a secured HTTP request to the log record
 - `PhpIniValueProcessor` adds the value of one or more PHP ini settings to the log record
 - `ProtocolVersionProcessor` adds the HTTP protocol version to the log record
+- `RequestSizeProcessor` adds the size of the request to the log record, headers included, in bytes
 - `ResourceUsagesProcessor` adds the resource usage to the log record as returned by [getrusage()](https://www.php.net/manual/en/function.getrusage.php)
 - `SapiNameProcessor` adds the name of the SAPI to the log record
 - `UuidProcessor` adds a UUID v7 to the log record to track records triggered during the same request

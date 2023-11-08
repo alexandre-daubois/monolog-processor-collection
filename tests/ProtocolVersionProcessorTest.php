@@ -31,4 +31,26 @@ class ProtocolVersionProcessorTest extends AbstractProcessorTestCase
         $this->assertArrayHasKey('protocol', $record->extra);
         $this->assertSame('Unknown', $record->extra['protocol']);
     }
+
+    public function testResettable(): void
+    {
+        $processor = new ProtocolVersionProcessor();
+
+        $handler = new TestHandler();
+        $handler->pushProcessor($processor);
+        $handler->handle($this->createRecord(Level::Notice));
+        $record = $handler->getRecords()[0];
+
+        $this->assertArrayHasKey('protocol', $record->extra);
+        $this->assertSame('Unknown', $record->extra['protocol']);
+
+        $processor->reset();
+
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $handler->handle($this->createRecord(Level::Notice));
+        $record = $handler->getRecords()[1];
+
+        $this->assertArrayHasKey('protocol', $record->extra);
+        $this->assertSame('HTTP/1.1', $record->extra['protocol']);
+    }
 }

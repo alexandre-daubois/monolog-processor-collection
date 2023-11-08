@@ -12,7 +12,6 @@ namespace MonologProcessorCollection\Tests;
 use Monolog\Handler\TestHandler;
 use Monolog\Level;
 use MonologProcessorCollection\IsHttpsProcessor;
-use MonologProcessorCollection\ProtocolVersionProcessor;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(IsHttpsProcessor::class)]
@@ -31,5 +30,28 @@ class IsHttpsProcessorTest extends AbstractProcessorTestCase
 
         $this->assertArrayHasKey('is_https', $record->extra);
         $this->assertFalse($record->extra['is_https']);
+    }
+
+    public function testResettable(): void
+    {
+        $processor = new IsHttpsProcessor();
+
+        $handler = new TestHandler();
+        $handler->pushProcessor($processor);
+        $handler->handle($this->createRecord(Level::Notice));
+        $record = $handler->getRecords()[0];
+
+        $this->assertArrayHasKey('is_https', $record->extra);
+        $this->assertFalse($record->extra['is_https']);
+
+        $processor->reset();
+
+        $_SERVER['HTTPS'] = 'on';
+
+        $handler->handle($this->createRecord(Level::Notice));
+        $record = $handler->getRecords()[1];
+
+        $this->assertArrayHasKey('is_https', $record->extra);
+        $this->assertTrue($record->extra['is_https']);
     }
 }
