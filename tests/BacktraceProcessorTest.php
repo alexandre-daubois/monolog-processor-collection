@@ -32,4 +32,19 @@ class BacktraceProcessorTest extends AbstractProcessorTestCase
         $this->assertStringContainsString(__FILE__, $record->extra['backtrace'][0]);
         $this->assertStringMatchesFormat('%s/vendor/bin/phpunit(%d)', $record->extra['backtrace'][\count($record->extra['backtrace']) - 1]);
     }
+
+    public function testLimit(): void
+    {
+        $processor = new BacktraceProcessor(2);
+
+        $handler = new TestHandler();
+        $handler->pushProcessor($processor);
+        $handler->handle($this->createRecord(Level::Notice));
+
+        $this->assertTrue($handler->hasNoticeRecords());
+        $record = $handler->getRecords()[0];
+
+        $this->assertArrayHasKey('backtrace', $record->extra);
+        $this->assertCount(2, $record->extra['backtrace']);
+    }
 }
