@@ -16,6 +16,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(RequestSizeProcessor::class)]
 class RequestSizeProcessorTest extends AbstractProcessorTestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testItWorks(): void
     {
         $processor = new RequestSizeProcessor();
